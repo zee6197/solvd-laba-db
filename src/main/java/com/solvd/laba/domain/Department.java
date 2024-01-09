@@ -1,0 +1,59 @@
+package com.solvd.laba.domain;
+
+
+import java.util.List;
+
+public class Department {
+    private Long id;
+    private String name;
+    private List<Employee> employees;
+
+    private BuildingCompany buildingCompany;
+
+
+    public Long getId() {
+
+        return id;
+    }
+
+    public void setId(Long id) {
+
+        this.id = id;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public void setName(String name) {
+
+        this.name = name;
+    }
+
+    public List<Employee> getEmployees() {
+
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+
+        this.employees = employees;
+    }
+
+    public BuildingCompany getBuildingCompany() {
+        return buildingCompany;
+    }
+
+    public void setBuildingCompany(BuildingCompany buildingCompany) {
+        this.buildingCompany = buildingCompany;
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
