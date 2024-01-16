@@ -9,10 +9,10 @@ import java.util.List;
 public class EmployeeMyBatisDAO implements EmployeeRepository {
 
     @Override
-    public void create(Employee employee) {
+    public void create(Employee employee, Long departmentID) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
             EmployeeRepository employeeDAO = sqlSession.getMapper(EmployeeRepository.class);
-            employeeDAO.create(employee);
+            employeeDAO.create(employee, departmentID);
         }
     }
 

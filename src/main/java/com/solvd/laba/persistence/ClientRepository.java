@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ClientRepository {
 
-    void create(Client client);
+    void create(Client client, Long companyID);
     Client findById(Long id);
     List<Client> findAll();
     void update(Client client);

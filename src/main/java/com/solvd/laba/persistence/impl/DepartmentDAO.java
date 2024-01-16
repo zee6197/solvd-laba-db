@@ -28,10 +28,11 @@ public class DepartmentDAO implements DepartmentRepository {
     private static final String DELETE_QUERY = "DELETE FROM departments WHERE id = ?";
 
     @Override
-    public void create(Department department) {
+    public void create(Department department, Long companyID) {
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, department.getName());
+            preparedStatement.setLong(2, companyID);
 
 
             int affectedRows = preparedStatement.executeUpdate();

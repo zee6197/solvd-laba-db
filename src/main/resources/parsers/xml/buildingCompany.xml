@@ -1,0 +1,39 @@
+<buildingCompany xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="buildingCompany.xsd">
+    <id>1</id>
+    <name>XYZ Constructions</name>
+    <location>Main Street</location>
+    <departments>
+        <department>
+            <id>1</id>
+            <name>Engineering</name>
+            <employees>
+                <employee>
+                    <id>1001</id>
+                    <firstName>John</firstName>
+                    <lastName>Doe</lastName>
+                    <hireDate>2022-01-01</hireDate>
+                    <salary>50000.0</salary>
+                </employee>
+            </employees>
+        </department>
+
+    </departments>
+    <clients>
+        <client>
+            <id>2</id>
+            <name>Acme Corp</name>
+            <contactInfo>Contact Info</contactInfo>
+            <industry>Manufacturing</industry>
+        </client>
+
+    </clients>
+    <equipment>
+        <equipmentItem>
+            <id>3</id>
+            <name>Crane</name>
+            <type>Heavy</type>
+        </equipmentItem>
+
+    </equipment>
+
+</buildingCompany>

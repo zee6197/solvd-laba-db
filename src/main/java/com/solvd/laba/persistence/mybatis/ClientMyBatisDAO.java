@@ -10,10 +10,10 @@ import java.util.List;
 public class ClientMyBatisDAO implements ClientRepository {
 
     @Override
-    public void create(Client client) {
+    public void create(Client client, Long companyID) {
         try (SqlSession session = PersistenceConfig.getSessionFactory().openSession(true)) {
             ClientRepository mapper = session.getMapper(ClientRepository.class);
-            mapper.create(client);
+            mapper.create(client, companyID);
         }
     }
 

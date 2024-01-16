@@ -10,10 +10,10 @@ import java.util.List;
 public class EquipmentMyBatisDAO implements EquipmentRepository {
 
     @Override
-    public void create(Equipment equipment) {
+    public void create(Equipment equipment, Long companyID) {
         try (SqlSession session = PersistenceConfig.getSessionFactory().openSession(true)) {
             EquipmentRepository mapper = session.getMapper(EquipmentRepository.class);
-            mapper.create(equipment);
+            mapper.create(equipment, companyID);
         }
     }
 

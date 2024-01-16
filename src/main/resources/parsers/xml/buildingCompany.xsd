@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="buildingCompany">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="location" type="xs:string"/>
+                <xs:element name="departments" type="departmentList"/>
+                <xs:element name="clients" type="clientList"/>
+                <xs:element name="equipment" type="equipmentList"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="departmentList">
+        <xs:sequence>
+            <xs:element name="department" type="departmentType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="departmentType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="employees" type="employeeList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="employeeList">
+        <xs:sequence>
+            <xs:element name="employee" type="employeeType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="employeeType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="hireDate" type="xs:date"/>
+            <xs:element name="salary" type="xs:double"/>
+            <!-- Additional fields for Employee if necessary -->
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="clientList">
+        <xs:sequence>
+            <xs:element name="client" type="clientType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="clientType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="contactInfo" type="xs:string"/>
+            <xs:element name="industry" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="equipmentList">
+        <xs:sequence>
+            <xs:element name="equipmentItem" type="equipmentType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="equipmentType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="type" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
+
+

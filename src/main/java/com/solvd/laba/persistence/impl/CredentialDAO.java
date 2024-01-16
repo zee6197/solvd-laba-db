@@ -128,7 +128,7 @@ public class CredentialDAO implements CredentialRepository {
         }
     }
 
-    private Credential mapRow(ResultSet resultSet) throws SQLException {
+    public static Credential mapRow(ResultSet resultSet) throws SQLException {
         Credential credential = new Credential();
         credential.setId(resultSet.getLong("id"));
         credential.setLogin(resultSet.getString("login"));

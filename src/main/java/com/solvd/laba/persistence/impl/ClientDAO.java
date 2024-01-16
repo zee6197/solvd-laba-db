@@ -23,12 +23,13 @@ public class ClientDAO implements ClientRepository {
     private static final String DELETE_QUERY = "DELETE FROM clients WHERE id = ?";
 
     @Override
-    public void create(Client client) {
+    public void create(Client client, Long companyID) {
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, client.getName());
             preparedStatement.setString(2, client.getContactInfo());
             preparedStatement.setString(3, client.getIndustry());
+            preparedStatement.setLong(4, companyID);
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
@@ -88,7 +89,7 @@ public class ClientDAO implements ClientRepository {
     }
 
     @Override
-        public void update(Client client) {
+    public void update(Client client) {
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setString(1, client.getName());

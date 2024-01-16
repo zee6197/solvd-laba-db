@@ -1,0 +1,36 @@
+
+  {
+    "id": 1,
+    "name": "XYZ Constructions",
+    "location": "Main Street",
+    "department": [
+      {
+        "id": 101,
+        "name": "Engineering",
+        "employees": [
+          {
+            "id": 1001,
+            "firstName": "John",
+            "lastName": "Doe",
+            "hireDate": "2022-01-01",
+            "salary": 50000.0
+          }
+        ]
+      }
+    ],
+    "clients": [
+      {
+        "id": 201,
+        "name": "Acme Corp",
+        "contactInfo": "123-456-7890",
+        "industry": "Manufacturing"
+      }
+    ],
+    "equipment": [
+      {
+        "id": 301,
+        "name": "Crane"
+      }
+    ]
+  }
+

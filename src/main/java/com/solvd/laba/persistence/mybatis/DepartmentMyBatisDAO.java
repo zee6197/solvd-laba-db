@@ -9,10 +9,10 @@ import java.util.List;
 public class DepartmentMyBatisDAO implements DepartmentRepository {
 
     @Override
-    public void create(Department department) {
+    public void create(Department department, Long companyID) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
             DepartmentRepository departmentRepository = sqlSession.getMapper(DepartmentRepository.class);
-            departmentRepository.create(department);
+            departmentRepository.create(department, companyID);
         }
     }
 

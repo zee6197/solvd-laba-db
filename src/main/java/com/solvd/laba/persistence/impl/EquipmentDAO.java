@@ -23,11 +23,12 @@ public class EquipmentDAO implements EquipmentRepository {
     private static final String DELETE_QUERY = "DELETE FROM equipment WHERE id = ?";
 
     @Override
-    public void create(Equipment equipment) {
+    public void create(Equipment equipment, Long companyID) {
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, equipment.getName());
             preparedStatement.setString(2, equipment.getEquipmentType());
+            preparedStatement.setLong(3, companyID);
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {

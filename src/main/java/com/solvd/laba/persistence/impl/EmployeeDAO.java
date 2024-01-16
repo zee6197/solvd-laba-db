@@ -28,7 +28,7 @@ public class EmployeeDAO implements EmployeeRepository {
     private static final String DELETE_QUERY = "DELETE FROM employees WHERE id = ?";
 
     @Override
-    public void create(Employee employee) {
+    public void create(Employee employee, Long departmentID) {
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, employee.getFirstName());
@@ -36,6 +36,7 @@ public class EmployeeDAO implements EmployeeRepository {
             preparedStatement.setDate(3, new java.sql.Date(employee.getHireDate().getTime()));
             preparedStatement.setDouble(4, employee.getSalary());
             preparedStatement.setLong(5, employee.getCredentials().getId());
+            preparedStatement.setLong(6, departmentID);
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
@@ -150,11 +151,9 @@ public class EmployeeDAO implements EmployeeRepository {
         employee.setSalary(resultSet.getDouble("salary"));
 
         // Create and set the credentials object
-        Credential credentials = new Credential();
-        credentials.setId(resultSet.getLong("credential_id"));
-        credentials.setLogin(resultSet.getString("login"));
-        credentials.setPassword(resultSet.getString("password"));
-        employee.setCredentials(credentials);
+        employee.setCredentials(CredentialDAO.mapRow(resultSet));
+
+
 
         return employee;
     }

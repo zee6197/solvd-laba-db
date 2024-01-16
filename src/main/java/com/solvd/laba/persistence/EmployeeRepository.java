@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface EmployeeRepository {
 
-    void create(Employee employee);
+    void create(Employee employee, Long departmentID);
     Employee findById(Long id);
     List<Employee> findAll();
     void update(Employee employee);

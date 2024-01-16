@@ -1,8 +1,10 @@
 package com.solvd.laba.domain;
 
-import java.util.Date;
-import java.util.HashMap;
+import jakarta.xml.bind.annotation.XmlType;
 
+import java.util.Date;
+
+@XmlType(name = "EmployeeDomain")
 public class Employee {
 
     private Long id;

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EquipmentRepository {
 
-    void create(Equipment equipment);
+    void create(Equipment equipment, Long companyID);
     Equipment findById(Long id);
     List<Equipment> findAll();
     void update(Equipment equipment);
