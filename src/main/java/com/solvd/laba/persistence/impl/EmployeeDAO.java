@@ -1,5 +1,6 @@
 package com.solvd.laba.persistence.impl;
 
+import com.solvd.laba.domain.Credential;
 import com.solvd.laba.domain.Employee;
 import com.solvd.laba.persistence.ConnectionPool;
 import com.solvd.laba.persistence.EmployeeRepository;
@@ -16,7 +17,12 @@ public class EmployeeDAO implements EmployeeRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     private static final String INSERT_QUERY = "INSERT INTO employees (first_name, last_name, hire_date, salary, credential_id, department_id) VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM employees WHERE id = ?";
+    private static final String SELECT_BY_ID_QUERY =
+
+            "SELECT e.*, c.id AS credential_id, c.login, c.password " +
+                    "FROM employees e " +
+                    "LEFT JOIN credentials c ON e.credential_id = c.id " +
+                    "WHERE e.id = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM employees";
     private static final String UPDATE_QUERY = "UPDATE employees SET first_name = ?, last_name = ?, hire_date = ?, salary = ?, credential_id = ?, department_id = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM employees WHERE id = ?";
@@ -30,7 +36,6 @@ public class EmployeeDAO implements EmployeeRepository {
             preparedStatement.setDate(3, new java.sql.Date(employee.getHireDate().getTime()));
             preparedStatement.setDouble(4, employee.getSalary());
             preparedStatement.setLong(5, employee.getCredentials().getId());
-            preparedStatement.setLong(6, employee.getDepartment().getId());
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
@@ -101,7 +106,6 @@ public class EmployeeDAO implements EmployeeRepository {
             preparedStatement.setDate(3, new java.sql.Date(employee.getHireDate().getTime()));
             preparedStatement.setDouble(4, employee.getSalary());
             preparedStatement.setLong(5, employee.getCredentials().getId());
-            preparedStatement.setLong(6, employee.getDepartment().getId());
             preparedStatement.setLong(7, employee.getId());
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -137,13 +141,22 @@ public class EmployeeDAO implements EmployeeRepository {
     }
 
 
-    private Employee mapRow(ResultSet resultSet) throws SQLException {
+    public static Employee mapRow(ResultSet resultSet) throws SQLException {
         Employee employee = new Employee();
         employee.setId(resultSet.getLong("id"));
         employee.setFirstName(resultSet.getString("first_name"));
         employee.setLastName(resultSet.getString("last_name"));
         employee.setHireDate(resultSet.getDate("hire_date"));
         employee.setSalary(resultSet.getDouble("salary"));
+
+        // Create and set the credentials object
+        Credential credentials = new Credential();
+        credentials.setId(resultSet.getLong("credential_id"));
+        credentials.setLogin(resultSet.getString("login"));
+        credentials.setPassword(resultSet.getString("password"));
+        employee.setCredentials(credentials);
+
         return employee;
     }
+
 }

@@ -15,7 +15,6 @@ public class Project {
     private List<Milestone> milestones;
     private List<Material> materials;
     private List<Employee> employees;
-    private BuildingCompany buildingCompany;
 
 
 
@@ -67,14 +66,6 @@ public class Project {
     public void setBudget(Double budget) {
 
         this.budget = budget;
-    }
-
-    public BuildingCompany getBuildingCompany() {
-        return buildingCompany;
-    }
-
-    public void setBuildingCompany(BuildingCompany buildingCompany) {
-        this.buildingCompany = buildingCompany;
     }
 
     public List<Invoice> getInvoices() {

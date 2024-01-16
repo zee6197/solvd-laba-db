@@ -13,9 +13,6 @@ public class Employee {
     private Credential credentials;
 
 
-    private Department department;
-
-
 
     public Long getId() {
 
@@ -75,14 +72,6 @@ public class Employee {
     public void setCredentials(Credential credentials) {
 
         this.credentials = credentials;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
 
     @Override

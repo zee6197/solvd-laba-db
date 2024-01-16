@@ -29,7 +29,6 @@ public class ClientDAO implements ClientRepository {
             preparedStatement.setString(1, client.getName());
             preparedStatement.setString(2, client.getContactInfo());
             preparedStatement.setString(3, client.getIndustry());
-            preparedStatement.setLong(4, client.getBuildingCompany().getId());
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
@@ -89,13 +88,12 @@ public class ClientDAO implements ClientRepository {
     }
 
     @Override
-    public void update(Client client) {
+        public void update(Client client) {
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setString(1, client.getName());
             preparedStatement.setString(2, client.getContactInfo());
             preparedStatement.setString(3, client.getIndustry());
-            preparedStatement.setLong(4, client.getBuildingCompany().getId());
             preparedStatement.setLong(5, client.getId());
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -130,7 +128,7 @@ public class ClientDAO implements ClientRepository {
         }
     }
 
-    private Client mapRow(ResultSet resultSet) throws SQLException {
+    public static Client mapRow(ResultSet resultSet) throws SQLException {
         Client client = new Client();
         client.setId(resultSet.getLong("id"));
         client.setName(resultSet.getString("name"));

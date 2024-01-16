@@ -1,9 +1,10 @@
 package com.solvd.laba.service.impl;
 
-
 import com.solvd.laba.domain.Client;
+
 import com.solvd.laba.persistence.ClientRepository;
 import com.solvd.laba.persistence.impl.ClientDAO;
+import com.solvd.laba.persistence.mybatis.ClientMyBatisDAO;
 import com.solvd.laba.service.ClientService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,10 +13,20 @@ import java.util.List;
 
 public class ClientServiceImpl implements ClientService {
     private static final Logger LOGGER = LogManager.getLogger(ClientServiceImpl.class);
+
+    // JDBC implementation:
     private final ClientRepository clientRepository;
 
+    // MyBatis implementation:
+    //private final ClientMyBatisDAO clientRepository;
+
     public ClientServiceImpl() {
-        this.clientRepository = new ClientDAO();
+
+        // JDBC implementation
+         this.clientRepository = new ClientDAO();
+
+        //  MyBatis:
+        // this.clientRepository = new ClientMyBatisDAO();
     }
 
     @Override

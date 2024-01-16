@@ -1,20 +1,30 @@
 package com.solvd.laba.service.impl;
 
-
 import com.solvd.laba.domain.Equipment;
 import com.solvd.laba.persistence.EquipmentRepository;
 import com.solvd.laba.persistence.impl.EquipmentDAO;
+import com.solvd.laba.persistence.mybatis.EquipmentMyBatisDAO;
 import com.solvd.laba.service.EquipmentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 
 public class EquipmentServiceImpl implements EquipmentService {
     private static final Logger LOGGER = LogManager.getLogger(EquipmentServiceImpl.class);
+
+    // MyBatis implementation
+    // private final EquipmentMyBatisDAO equipmentRepository;
+
     private final EquipmentRepository equipmentRepository;
 
     public EquipmentServiceImpl() {
-        this.equipmentRepository = new EquipmentDAO();
+
+        //  JDBC implementation
+         this.equipmentRepository = new EquipmentDAO();
+
+        // MyBatis:
+        //this.equipmentRepository = new EquipmentMyBatisDAO();
     }
 
     @Override

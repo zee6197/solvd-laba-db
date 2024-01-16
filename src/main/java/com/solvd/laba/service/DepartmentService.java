@@ -10,4 +10,5 @@ public interface DepartmentService {
     List<Department> retrieveAll();
     void update(Department department);
     void delete(Long id);
+    Department retrieveWithEmployeesById(Long id);
 }

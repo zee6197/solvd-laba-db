@@ -8,8 +8,6 @@ public class Department {
     private String name;
     private List<Employee> employees;
 
-    private BuildingCompany buildingCompany;
-
 
     public Long getId() {
 
@@ -39,14 +37,6 @@ public class Department {
     public void setEmployees(List<Employee> employees) {
 
         this.employees = employees;
-    }
-
-    public BuildingCompany getBuildingCompany() {
-        return buildingCompany;
-    }
-
-    public void setBuildingCompany(BuildingCompany buildingCompany) {
-        this.buildingCompany = buildingCompany;
     }
 
     @Override

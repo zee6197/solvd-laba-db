@@ -1,12 +1,12 @@
 package com.solvd.laba.service.impl;
 
-
 import com.solvd.laba.domain.Employee;
 import com.solvd.laba.persistence.EmployeeRepository;
 import com.solvd.laba.persistence.impl.EmployeeDAO;
 import com.solvd.laba.service.EmployeeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
@@ -14,6 +14,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     public EmployeeServiceImpl() {
+
         this.employeeRepository = new EmployeeDAO();
     }
 
@@ -45,5 +46,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(Long id) {
         LOGGER.info("Deleting employee with ID: {}", id);
         employeeRepository.delete(id);
+    }
+
+    @Override
+    public Employee retrieveWithCredentialsById(Long id) {
+        LOGGER.info("Retrieving employee with credentials by id");
+        return employeeRepository.findById(id);
     }
 }

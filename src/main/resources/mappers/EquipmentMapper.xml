@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.laba.persistence.EquipmentRepository">
+
+    <insert id="create" parameterType="com.solvd.laba.domain.Equipment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO equipment (name, equipment_type, building_company_id) VALUES (#{name}, #{equipmentType}, #{buildingCompanyId})
+    </insert>
+
+    <select id="findById" resultType="com.solvd.laba.domain.Equipment">
+        SELECT * FROM equipment WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultType="com.solvd.laba.domain.Equipment">
+        SELECT * FROM equipment
+    </select>
+
+    <update id="update" parameterType="com.solvd.laba.domain.Equipment">
+        UPDATE equipment SET name = #{name}, equipment_type = #{equipmentType}, building_company_id = #{buildingCompanyId} WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM equipment WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -5,7 +5,6 @@ public class Equipment {
     private Long id;
     private String name;
     private String equipmentType;
-    private BuildingCompany buildingCompany;
 
 
     public Long getId() {
@@ -36,14 +35,6 @@ public class Equipment {
     public void setEquipmentType(String equipmentType) {
 
         this.equipmentType = equipmentType;
-    }
-
-    public BuildingCompany getBuildingCompany() {
-        return buildingCompany;
-    }
-
-    public void setBuildingCompany(BuildingCompany buildingCompany) {
-        this.buildingCompany = buildingCompany;
     }
 
     @Override

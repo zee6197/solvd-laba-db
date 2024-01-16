@@ -6,7 +6,6 @@ public class Client {
     private String name;
     private String contactInfo;
     private String industry;
-    private BuildingCompany buildingCompany;
 
 
     public Long getId() {
@@ -47,14 +46,6 @@ public class Client {
     public void setIndustry(String industry) {
 
         this.industry = industry;
-    }
-
-    public BuildingCompany getBuildingCompany() {
-        return buildingCompany;
-    }
-
-    public void setBuildingCompany(BuildingCompany buildingCompany) {
-        this.buildingCompany = buildingCompany;
     }
 
     @Override

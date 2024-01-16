@@ -40,6 +40,7 @@ public enum Config {
     }
 
     public String getValue() {
+
         return prop.getProperty(key);
     }
 }

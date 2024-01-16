@@ -28,7 +28,6 @@ public class EquipmentDAO implements EquipmentRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, equipment.getName());
             preparedStatement.setString(2, equipment.getEquipmentType());
-            preparedStatement.setLong(3, equipment.getBuildingCompany().getId());
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
@@ -93,7 +92,6 @@ public class EquipmentDAO implements EquipmentRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setString(1, equipment.getName());
             preparedStatement.setString(2, equipment.getEquipmentType());
-            preparedStatement.setLong(3, equipment.getBuildingCompany().getId());
             preparedStatement.setLong(4, equipment.getId());
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -128,7 +126,7 @@ public class EquipmentDAO implements EquipmentRepository {
         }
     }
 
-    private Equipment mapRow(ResultSet resultSet) throws SQLException {
+    public static Equipment mapRow(ResultSet resultSet) throws SQLException {
         Equipment equipment = new Equipment();
         equipment.setId(resultSet.getLong("id"));
         equipment.setName(resultSet.getString("name"));

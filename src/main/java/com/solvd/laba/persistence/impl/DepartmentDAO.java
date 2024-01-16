@@ -2,6 +2,7 @@ package com.solvd.laba.persistence.impl;
 
 
 import com.solvd.laba.domain.Department;
+import com.solvd.laba.domain.Employee;
 import com.solvd.laba.persistence.ConnectionPool;
 import com.solvd.laba.persistence.DepartmentRepository;
 import org.apache.logging.log4j.LogManager;
@@ -9,7 +10,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DepartmentDAO implements DepartmentRepository {
 
@@ -17,7 +20,9 @@ public class DepartmentDAO implements DepartmentRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     private static final String INSERT_QUERY = "INSERT INTO departments (name, building_company_id) VALUES (?, ?)";
-    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM departments WHERE id = ?";
+    private static final String SELECT_BY_ID_QUERY = "SELECT d.*, e.* FROM departments d " +
+            "LEFT JOIN employees e ON d.id = e.department_id " +
+            "WHERE d.id = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM departments";
     private static final String UPDATE_QUERY = "UPDATE departments SET name = ?, building_company_id = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM departments WHERE id = ?";
@@ -27,7 +32,7 @@ public class DepartmentDAO implements DepartmentRepository {
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, department.getName());
-            preparedStatement.setLong(2, department.getBuildingCompany().getId());
+
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
@@ -53,13 +58,36 @@ public class DepartmentDAO implements DepartmentRepository {
     @Override
     public Department findById(Long id) {
         Department department = null;
+        List<Employee> employees = new ArrayList<>();
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID_QUERY)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                department = mapRow(resultSet);
+
+            // Create a map to group employees by department_id
+            Map<Long, Department> departmentMap = new HashMap<>();
+
+            while (resultSet.next()) {
+                Long departmentId = resultSet.getLong("d.id");
+
+                // Check if the department is already in the map
+                if (!departmentMap.containsKey(departmentId)) {
+                    department = mapRow(resultSet);
+                    department.setEmployees(new ArrayList<>());
+                    departmentMap.put(departmentId, department);
+                } else {
+                    department = departmentMap.get(departmentId);
+                }
+
+                // Check if there are related employees
+                if (resultSet.getLong("e.id") != 0) {
+                    Employee employee = EmployeeDAO.mapRow(resultSet);
+                    employees.add(employee);
+                }
             }
+
+            // Set the employees for the department
+            department.setEmployees(employees);
         } catch (SQLException e) {
             LOGGER.error("Unable to find department by id: ", e);
             throw new RuntimeException("Unable to find Department by ID", e);
@@ -68,6 +96,7 @@ public class DepartmentDAO implements DepartmentRepository {
         }
         return department;
     }
+
 
     @Override
     public List<Department> findAll() {
@@ -91,7 +120,6 @@ public class DepartmentDAO implements DepartmentRepository {
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
             preparedStatement.setString(1, department.getName());
-            preparedStatement.setLong(2, department.getBuildingCompany().getId());
             preparedStatement.setLong(3, department.getId());
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -125,7 +153,7 @@ public class DepartmentDAO implements DepartmentRepository {
         }
     }
 
-    private Department mapRow(ResultSet resultSet) throws SQLException {
+    public static Department mapRow(ResultSet resultSet) throws SQLException {
         Department department = new Department();
         department.setId(resultSet.getLong("id"));
         department.setName(resultSet.getString("name"));
