@@ -21,16 +21,16 @@ public class EquipmentServiceImpl implements EquipmentService {
     public EquipmentServiceImpl() {
 
         //  JDBC implementation
-         this.equipmentRepository = new EquipmentDAO();
+        this.equipmentRepository = new EquipmentDAO();
 
         // MyBatis:
         //this.equipmentRepository = new EquipmentMyBatisDAO();
     }
 
     @Override
-    public void create(Equipment equipment) {
+    public void create(Equipment equipment, Long companyID) {
         LOGGER.info("Creating equipment");
-        equipmentRepository.create(equipment);
+        equipmentRepository.create(equipment, companyID);
     }
 
     @Override

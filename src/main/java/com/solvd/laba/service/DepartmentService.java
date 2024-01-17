@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface DepartmentService {
 
-    void create(Department department);
+    void create(Department department, Long companyID);
     Department retrieveById(Long id);
     List<Department> retrieveAll();
     void update(Department department);

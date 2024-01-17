@@ -9,7 +9,6 @@ import java.util.Date;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "EmployeeModel")
 public class Employee {
-    @XmlAttribute(name = "id")
     private Long id;
 
     private String firstName;

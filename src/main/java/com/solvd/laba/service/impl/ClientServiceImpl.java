@@ -17,22 +17,17 @@ public class ClientServiceImpl implements ClientService {
     // JDBC implementation:
     private final ClientRepository clientRepository;
 
-    // MyBatis implementation:
-    //private final ClientMyBatisDAO clientRepository;
 
     public ClientServiceImpl() {
 
         // JDBC implementation
-         this.clientRepository = new ClientDAO();
-
-        //  MyBatis:
-        // this.clientRepository = new ClientMyBatisDAO();
+        this.clientRepository = new ClientMyBatisDAO();
     }
 
     @Override
-    public void create(Client client) {
+    public void create(Client client, Long companyID) {
         LOGGER.info("Creating client");
-        clientRepository.create(client);
+        clientRepository.create(client, companyID);
     }
 
     @Override

@@ -7,7 +7,6 @@ import java.util.List;
 @XmlRootElement(name = "buildingCompany")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BuildingCompany {
-    @XmlAttribute(name = "id")
     private Long id;
     private String name;
     private String location;

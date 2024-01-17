@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface EquipmentService {
 
-    void create(Equipment equipment);
+    void create(Equipment equipment, Long companyID);
     Equipment retrieveById(Long id);
     List<Equipment> retrieveAll();
     void update(Equipment equipment);

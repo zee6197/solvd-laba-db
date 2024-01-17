@@ -13,6 +13,9 @@ import com.solvd.laba.persistence.impl.ClientDAO;
 import com.solvd.laba.persistence.impl.DepartmentDAO;
 import com.solvd.laba.persistence.impl.EquipmentDAO;
 import com.solvd.laba.service.BuildingCompanyService;
+import com.solvd.laba.service.ClientService;
+import com.solvd.laba.service.DepartmentService;
+import com.solvd.laba.service.EquipmentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,15 +24,15 @@ import java.util.List;
 public class BuildingCompanyServiceImpl implements BuildingCompanyService {
     private static final Logger LOGGER = LogManager.getLogger(BuildingCompanyServiceImpl.class);
     private final BuildingCompanyRepository buildingCompanyRepository;
-    private final DepartmentRepository departmentRepository;
-    private final ClientRepository clientRepository;
-    private final EquipmentRepository equipmentRepository;
+    private final DepartmentService departmentService;
+    private final ClientService clientService;
+    private final EquipmentService equipmentService;
 
     public BuildingCompanyServiceImpl() {
         this.buildingCompanyRepository = new BuildingCompanyDAO();
-        this.departmentRepository = new DepartmentDAO();
-        this.clientRepository = new ClientDAO();
-        this.equipmentRepository = new EquipmentDAO();
+        departmentService = new DepartmentServiceImpl();
+        clientService = new ClientServiceImpl();
+        equipmentService = new EquipmentServiceImpl();
     }
 
 
@@ -37,6 +40,26 @@ public class BuildingCompanyServiceImpl implements BuildingCompanyService {
     public void create(BuildingCompany buildingCompany) {
         LOGGER.info("Creating building company");
         buildingCompanyRepository.create(buildingCompany);
+
+        if (!buildingCompany.getClients().isEmpty()) {
+            buildingCompany.getClients().forEach(client -> {
+                clientService.create(client, buildingCompany.getId());
+            });
+        }
+
+        if (!buildingCompany.getEquipment().isEmpty()) {
+            buildingCompany.getEquipment().forEach(equipment -> {
+                equipmentService.create(equipment, buildingCompany.getId());
+            });
+        }
+
+        if (!buildingCompany.getDepartment().isEmpty()) {
+            buildingCompany.getDepartment().forEach(department -> {
+                departmentService.create(department, buildingCompany.getId());
+            });
+        }
+
+
     }
 
     @Override
@@ -67,10 +90,6 @@ public class BuildingCompanyServiceImpl implements BuildingCompanyService {
     public BuildingCompany retrieveWithDepartments(Long id) {
         LOGGER.info("Retrieving building company with departments by id");
         BuildingCompany company = buildingCompanyRepository.findById(id);
-        if (company != null) {
-            List<Department> departments = (List<Department>) departmentRepository.findById(id);
-            company.setDepartment(departments);
-        }
         return company;
     }
 
@@ -78,10 +97,6 @@ public class BuildingCompanyServiceImpl implements BuildingCompanyService {
     public BuildingCompany retrieveWithClients(Long id) {
         LOGGER.info("Retrieving building company with clients by id");
         BuildingCompany company = buildingCompanyRepository.findById(id);
-        if (company != null) {
-            List<Client> clients = (List<Client>) clientRepository.findById(id);
-            company.setClients(clients);
-        }
         return company;
     }
 
@@ -89,10 +104,6 @@ public class BuildingCompanyServiceImpl implements BuildingCompanyService {
     public BuildingCompany retrieveWithEquipment(Long id) {
         LOGGER.info("Retrieving building company with equipment by id");
         BuildingCompany company = buildingCompanyRepository.findById(id);
-        if (company != null) {
-            List<Equipment> equipmentList = (List<Equipment>) equipmentRepository.findById(id);
-            company.setEquipment(equipmentList);
-        }
         return company;
     }
 }

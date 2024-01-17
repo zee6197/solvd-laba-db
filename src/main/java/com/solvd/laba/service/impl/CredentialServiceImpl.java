@@ -14,7 +14,7 @@ public class CredentialServiceImpl implements CredentialService {
     private static final Logger LOGGER = LogManager.getLogger(CredentialServiceImpl.class);
 
     //  JDBC implementation:
-      private final CredentialRepository credentialRepository;
+    private final CredentialRepository credentialRepository;
 
 
     // MyBatis implementation:
@@ -23,7 +23,7 @@ public class CredentialServiceImpl implements CredentialService {
     public CredentialServiceImpl() {
 
         //  JDBC implementation:
-         this.credentialRepository = new CredentialDAO();
+        this.credentialRepository = new CredentialDAO();
 
         // MyBatis implementation:
         //this.credentialRepository = new CredentialMyBatisDAO();
@@ -59,4 +59,3 @@ public class CredentialServiceImpl implements CredentialService {
         credentialRepository.delete(id);
     }
 }
-

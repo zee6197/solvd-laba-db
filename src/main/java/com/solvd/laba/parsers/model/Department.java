@@ -5,7 +5,6 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Department {
-    @XmlAttribute(name = "id")
     private Long id;
 
     private String name;

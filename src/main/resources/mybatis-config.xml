@@ -21,7 +21,7 @@
     </environments>
 
     <mappers>
-        <mapper resource="mappers/BuildingCompanyMapper.xml"/>
+<!--        <mapper resource="mappers/BuildingCompanyMapper.xml"/>-->
         <mapper resource="mappers/ClientMapper.xml"/>
         <mapper resource="mappers/DepartmentMapper.xml"/>
         <mapper resource="mappers/EmployeeMapper.xml"/>

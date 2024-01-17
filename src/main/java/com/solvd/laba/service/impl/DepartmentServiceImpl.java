@@ -5,6 +5,7 @@ import com.solvd.laba.persistence.DepartmentRepository;
 import com.solvd.laba.persistence.impl.DepartmentDAO;
 import com.solvd.laba.persistence.mybatis.DepartmentMyBatisDAO;
 import com.solvd.laba.service.DepartmentService;
+import com.solvd.laba.service.EmployeeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,26 +16,30 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     // JDBC implementation:
     private final DepartmentRepository departmentRepository;
+    private final EmployeeService employeeService;
 
-    // MyBatis implementation:
-    // private final DepartmentMyBatisDAO credentialRepository;
 
 
     // JDBC implementation:
     public DepartmentServiceImpl() {
 
         this.departmentRepository = new DepartmentDAO();
+        this.employeeService = new EmployeeServiceImpl();
 
-        // MyBatis implementation
-        //private final DepartmentRepository departmentRepository = new DepartmentMyBatisDAO();
 
     }
 
 
     @Override
-    public void create(Department department) {
+    public void create(Department department, Long companyID) {
         LOGGER.info("Creating department");
-        departmentRepository.create(department);
+        departmentRepository.create(department, companyID);
+
+        if (!department.getEmployees().isEmpty()) {
+            department.getEmployees().forEach(employee -> {
+                employeeService.create(employee, department.getId());
+            });
+        }
     }
 
     @Override

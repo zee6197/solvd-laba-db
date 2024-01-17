@@ -4,7 +4,6 @@ import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Client {
-    @XmlAttribute(name = "id")
     private Long id;
 
     private String name;

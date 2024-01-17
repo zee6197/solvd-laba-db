@@ -2,8 +2,7 @@ package com.solvd.laba.service.impl;
 
 import com.solvd.laba.domain.Employee;
 import com.solvd.laba.persistence.EmployeeRepository;
-// import com.solvd.laba.persistence.impl.EmployeeDAO; // JDBC implementation
-import com.solvd.laba.persistence.mybatis.EmployeeMyBatisDAO; // MyBatis implementation
+import com.solvd.laba.persistence.impl.EmployeeDAO;
 import com.solvd.laba.service.EmployeeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,22 +11,17 @@ import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
     private static final Logger LOGGER = LogManager.getLogger(EmployeeServiceImpl.class);
-
-    // MyBatis implementation
     private final EmployeeRepository employeeRepository;
 
     public EmployeeServiceImpl() {
-        // JDBC implementation
-        // this.employeeRepository = new EmployeeDAO();
 
-        // MyBatis implementation
-        this.employeeRepository = new EmployeeMyBatisDAO();
+        this.employeeRepository = new EmployeeDAO();
     }
 
     @Override
-    public void create(Employee employee) {
+    public void create(Employee employee, Long departmentID) {
         LOGGER.info("Creating employee");
-        employeeRepository.create(employee);
+        employeeRepository.create(employee, departmentID);
     }
 
     @Override
