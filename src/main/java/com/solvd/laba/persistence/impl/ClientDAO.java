@@ -17,8 +17,8 @@ public class ClientDAO implements ClientRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     private static final String INSERT_QUERY = "INSERT INTO clients (name, contact_info, industry, building_company_id) VALUES (?, ?, ?, ?)";
-    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM clients WHERE id = ?";
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM clients";
+    private static final String SELECT_BY_ID_QUERY = "SELECT id, name, contact_info, industry FROM clients WHERE id = ?";
+    private static final String SELECT_ALL_QUERY = "SELECT id, name, contact_info, industry FROM clients";
     private static final String UPDATE_QUERY = "UPDATE clients SET name = ?, contact_info = ?, industry = ?, building_company_id = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM clients WHERE id = ?";
 

@@ -5,7 +5,6 @@ import com.solvd.laba.service.EquipmentService;
 import com.solvd.laba.service.impl.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
@@ -24,6 +23,7 @@ public class Main {
         // Create operations
 
         ArrayList<Client> clients = new ArrayList<>();
+
         Client newClient = new Client();
         newClient.setName("Acme Corp");
         newClient.setContactInfo("acme@corpmail.com");
@@ -38,6 +38,7 @@ public class Main {
 
         Department newDepartment = new Department();
         newDepartment.setName("Engineering");
+
         // newDepartment.getEmployees();
 
 
@@ -52,11 +53,5 @@ public class Main {
         buildingCompanyService.update(newBuildingCompany);
 
         clientService.update(newClient);
-
-        // equipmentService.update(newEquipment);
-        // departmentService.update(newDepartment);
-        // employeeService.update(newEmployee);
-
-
     }
 }

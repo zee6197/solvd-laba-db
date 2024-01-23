@@ -17,8 +17,8 @@ public class EquipmentDAO implements EquipmentRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     private static final String INSERT_QUERY = "INSERT INTO equipment (name, equipment_type, building_company_id) VALUES (?, ?, ?)";
-    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM equipment WHERE id = ?";
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM equipment";
+    private static final String SELECT_BY_ID_QUERY = "SELECT id, name, equipment_type FROM equipment WHERE id = ?";
+    private static final String SELECT_ALL_QUERY = "SELECT id, name, equipment_type FROM equipment";
     private static final String UPDATE_QUERY = "UPDATE equipment SET name = ?, equipment_type = ?, building_company_id = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM equipment WHERE id = ?";
 

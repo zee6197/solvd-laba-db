@@ -20,10 +20,15 @@ public class DepartmentDAO implements DepartmentRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     private static final String INSERT_QUERY = "INSERT INTO departments (name, building_company_id) VALUES (?, ?)";
-    private static final String SELECT_BY_ID_QUERY = "SELECT d.*, e.* FROM departments d " +
+    private static final String SELECT_BY_ID_QUERY = "SELECT d.id AS department_id, d.name AS department_name, " +
+            "e.id AS employee_id, e.firstName, e.lastName, e.hireDate, e.salary, e.credentials_id " +
+            "FROM departments d " +
             "LEFT JOIN employees e ON d.id = e.department_id " +
             "WHERE d.id = ?";
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM departments";
+    private static final String SELECT_ALL_QUERY = "SELECT d.id AS department_id, d.name AS department_name, " +
+            "e.id AS employee_id, e.firstName, e.lastName, e.hireDate, e.salary, e.credentials_id " +
+            "FROM departments d " +
+            "LEFT JOIN employees e ON d.id = e.department_id";
     private static final String UPDATE_QUERY = "UPDATE departments SET name = ?, building_company_id = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM departments WHERE id = ?";
 

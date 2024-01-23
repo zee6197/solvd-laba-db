@@ -23,7 +23,11 @@ public class EmployeeDAO implements EmployeeRepository {
                     "FROM employees e " +
                     "LEFT JOIN credentials c ON e.credential_id = c.id " +
                     "WHERE e.id = ?";
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM employees";
+    private static final String SELECT_ALL_QUERY =
+            "SELECT e.id, e.first_name, e.last_name, e.hire_date, e.salary, e.credential_id, e.department_id, " +
+            "c.id AS credential_id, c.login, c.password " +
+            "FROM employees e " +
+            "LEFT JOIN credentials c ON e.credential_id = c.id";
     private static final String UPDATE_QUERY = "UPDATE employees SET first_name = ?, last_name = ?, hire_date = ?, salary = ?, credential_id = ?, department_id = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM employees WHERE id = ?";
 

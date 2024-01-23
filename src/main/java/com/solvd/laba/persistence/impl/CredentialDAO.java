@@ -17,8 +17,8 @@ public class CredentialDAO implements CredentialRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     private static final String INSERT_QUERY = "INSERT INTO credentials (login, password) VALUES (?, ?)";
-    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM credentials WHERE id = ?";
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM credentials";
+    private static final String SELECT_BY_ID_QUERY = "SELECT id, login, password FROM credentials WHERE id = ?";
+    private static final String SELECT_ALL_QUERY = "SELECT id, login, password FROM credentials";
     private static final String UPDATE_QUERY = "UPDATE credentials SET login = ?, password = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM credentials WHERE id = ?";
 

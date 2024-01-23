@@ -33,7 +33,15 @@ public class BuildingCompanyDAO implements BuildingCompanyRepository {
                     "LEFT JOIN equipment e ON bc.id = e.building_company_id " +
                     "WHERE bc.id = ?";
 
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM building_company";
+    private static final String SELECT_ALL_QUERY =  "SELECT " +
+            "    bc.id AS building_company_id, bc.name AS building_company_name, bc.location AS building_company_location, " +
+            "    d.id AS department_id, d.name AS department_name, " +
+            "    c.id AS client_id, c.name AS client_name, c.contact_info AS client_contact_info, c.industry AS client_industry, " +
+            "    e.id AS equipment_id, e.name AS equipment_name, e.equipment_type AS equipment_type " +
+            "FROM building_company bc " +
+            "LEFT JOIN departments d ON bc.id = d.building_company_id " +
+            "LEFT JOIN clients c ON bc.id = c.building_company_id " +
+            "LEFT JOIN equipment e ON bc.id = e.building_company_id";
     private static final String UPDATE_QUERY = "UPDATE building_company SET name = ?, location = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM building_company WHERE id = ?";
 
