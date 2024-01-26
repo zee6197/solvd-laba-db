@@ -11,9 +11,6 @@ public class Main {
 
         // Services initialization
         BuildingCompanyServiceImpl buildingCompanyService = new BuildingCompanyServiceImpl();
-        EquipmentServiceImpl equipmentService = new EquipmentServiceImpl();
-        DepartmentServiceImpl departmentService = new DepartmentServiceImpl();
-        EmployeeServiceImpl employeeService = new EmployeeServiceImpl();
         CredentialServiceImpl credentialService = new CredentialServiceImpl();
 
         // Creating BuildingCompany
