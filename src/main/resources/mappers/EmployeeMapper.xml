@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.laba.persistence.IEmployeeDAO">
 
-    <insert id="create" parameterType="com.solvd.laba.domain.Employee">
-        INSERT INTO employees (first_name, last_name, hire_date, salary, credential_id) VALUES (#{firstName}, #{lastName}, #{hireDate}, #{salary}, #{credentials.id})
+    <insert id="create" parameterType="com.solvd.laba.domain.Employee" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO employees (first_name, last_name, hire_date, salary, credential_id)
+        VALUES (#{firstName}, #{lastName}, #{hireDate}, #{salary}, #{credentials.id})
     </insert>
 
     <select id="findById" resultMap="EmployeeResult">
         SELECT
-        e.*,
-        c.id as 'credentials.id',
-        c.login as 'credentials.login',
-        c.password as 'credentials.password'
+        e.id, e.first_name, e.last_name, e.hire_date, e.salary, e.credential_id,
+        c.id as 'credential_id', c.login as 'credentials.login', c.password as 'credentials.password'
         FROM employees e
         LEFT JOIN credentials c ON e.credential_id = c.id
         WHERE e.id = #{id}
@@ -21,16 +18,16 @@
 
     <select id="findAll" resultMap="EmployeeResult">
         SELECT
-        e.*,
-        c.id as 'credentials.id',
-        c.login as 'credentials.login',
-        c.password as 'credentials.password'
+        e.id, e.first_name, e.last_name, e.hire_date, e.salary, e.credential_id,
+        c.id as 'credential_id', c.login as 'credentials.login', c.password as 'credentials.password'
         FROM employees e
         LEFT JOIN credentials c ON e.credential_id = c.id
     </select>
 
     <update id="update" parameterType="com.solvd.laba.domain.Employee">
-        UPDATE employees SET first_name = #{firstName}, last_name = #{lastName}, hire_date = #{hireDate}, salary = #{salary}, credential_id = #{credentials.id} WHERE id = #{id}
+        UPDATE employees
+        SET first_name = #{firstName}, last_name = #{lastName}, hire_date = #{hireDate}, salary = #{salary}, credential_id = #{credentials.id}
+        WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="long">
@@ -38,15 +35,15 @@
     </delete>
 
     <resultMap id="EmployeeResult" type="com.solvd.laba.domain.Employee">
-        <id property="id" column="id" />
-        <result property="firstName" column="first_name" />
-        <result property="lastName" column="last_name" />
-        <result property="hireDate" column="hire_date" />
-        <result property="salary" column="salary" />
+        <id property="id" column="id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="hireDate" column="hire_date"/>
+        <result property="salary" column="salary"/>
         <association property="credentials" javaType="com.solvd.laba.domain.Credential">
-            <id property="id" column="credentials.id" />
-            <result property="login" column="credentials.login" />
-            <result property="password" column="credentials.password" />
+            <id property="id" column="credential_id"/>
+            <result property="login" column="credentials.login"/>
+            <result property="password" column="credentials.password"/>
         </association>
     </resultMap>
 

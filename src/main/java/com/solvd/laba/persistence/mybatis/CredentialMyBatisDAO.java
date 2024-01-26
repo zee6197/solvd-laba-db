@@ -15,8 +15,9 @@ public class CredentialMyBatisDAO implements CredentialRepository {
         try (SqlSession session = PersistenceConfig.getSessionFactory().openSession(true)) {
             CredentialRepository mapper = session.getMapper(CredentialRepository.class);
             mapper.create(credential);
+            session.commit();
+            return credential.getId();
         }
-        return 0;
     }
 
     @Override

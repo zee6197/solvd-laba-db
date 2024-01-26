@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.laba.persistence.BuildingCompanyRepository">
+
+    <insert id="create" parameterType="com.solvd.laba.domain.BuildingCompany">
+        INSERT INTO building_company (name, location) VALUES (#{name}, #{location})
+    </insert>
+
+    <select id="findById" resultMap="BuildingCompanyResult">
+        SELECT
+        bc.id AS 'id',
+        bc.name AS 'name',
+        bc.location AS 'location'
+        FROM building_company bc
+        WHERE bc.id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="BuildingCompanyResult">
+        SELECT
+        bc.id AS 'id',
+        bc.name AS 'name',
+        bc.location AS 'location'
+        FROM building_company bc
+    </select>
+
+    <update id="update" parameterType="com.solvd.laba.domain.BuildingCompany">
+        UPDATE building_company SET name = #{name}, location = #{location} WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM building_company WHERE id = #{id}
+    </delete>
+
+    <resultMap id="BuildingCompanyResult" type="com.solvd.laba.domain.BuildingCompany">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="location" column="location" />
+    </resultMap>
+
+</mapper>
