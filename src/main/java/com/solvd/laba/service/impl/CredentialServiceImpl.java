@@ -13,20 +13,12 @@ import java.util.List;
 public class CredentialServiceImpl implements CredentialService {
     private static final Logger LOGGER = LogManager.getLogger(CredentialServiceImpl.class);
 
-    //  JDBC implementation:
     private final CredentialRepository credentialRepository;
-
-
-    // MyBatis implementation:
-    //private final CredentialMyBatisDAO credentialRepository;
 
     public CredentialServiceImpl() {
 
-        //  JDBC implementation:
         this.credentialRepository = new CredentialDAO();
 
-        // MyBatis implementation:
-        //this.credentialRepository = new CredentialMyBatisDAO();
     }
 
     @Override

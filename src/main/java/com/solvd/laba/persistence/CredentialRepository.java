@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CredentialRepository {
 
-    void create(Credential credential);
+    long create(Credential credential);
     Credential findById(Long id);
     List<Credential> findAll();
     void update(Credential credential);

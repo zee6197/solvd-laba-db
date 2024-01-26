@@ -23,8 +23,9 @@ public class CredentialDAO implements CredentialRepository {
     private static final String DELETE_QUERY = "DELETE FROM credentials WHERE id = ?";
 
     @Override
-    public void create(Credential credential) {
+    public long create(Credential credential) {
         Connection connection = CONNECTION_POOL.getConnection();
+        long generatedId = -1;
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, credential.getLogin());
             preparedStatement.setString(2, credential.getPassword());
@@ -36,19 +37,22 @@ public class CredentialDAO implements CredentialRepository {
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    credential.setId(generatedKeys.getLong(1));
+                    generatedId = generatedKeys.getLong(1);
+                    credential.setId(generatedId);
+                    LOGGER.info("Credential created with ID: {}", generatedId);
                 } else {
                     throw new SQLException("Creating credential failed, no ID obtained.");
                 }
             }
-            LOGGER.info("Credential created: {}", credential);
         } catch (SQLException e) {
             LOGGER.error("Unable to create credential: ", e);
             throw new RuntimeException("Unable to create Credential", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
+        return generatedId;
     }
+
 
     @Override
     public Credential findById(Long id) {

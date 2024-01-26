@@ -25,38 +25,24 @@ public class MainDom {
 
     private static void validateXML(File xmlFile, File xsdFile) {
         try {
-            // Create a DocumentBuilderFactory
+
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             dbFactory.setNamespaceAware(true);
 
-            // Create a DocumentBuilder
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
-            // Parse the XML file and get the Document
             Document doc = dBuilder.parse(xmlFile);
 
-            // Create a SchemaFactory
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
-            // Compile the schema
             Schema schema = factory.newSchema(xsdFile);
-
-            // Create a Validator instance
             Validator validator = schema.newValidator();
-
-            // Validate the XML document
             validator.validate(new DOMSource(doc));
             System.out.println("XML is valid against the provided XSD schema.");
         } catch (SAXException e) {
-            // Handle the situation when the XML is not valid against the XSD
             System.err.println("Validation error: " + e.getMessage());
         } catch (ParserConfigurationException e) {
-            // Handle errors related to the parser configuration
             System.err.println("Parser configuration error: " + e.getMessage());
         } catch (IOException e) {
-            // Handle IO errors
             System.err.println("IO error: " + e.getMessage());
         }
     }
 }
-

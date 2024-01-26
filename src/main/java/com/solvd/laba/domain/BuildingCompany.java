@@ -1,16 +1,18 @@
 package com.solvd.laba.domain;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingCompany {
     private Long id;
     private String name;
     private String location;
-    private List<Department> department;
-    private List<Client> clients;
-    private List<Equipment> equipment;
-    private List<Project> projects;
+
+    private List<Department> departments = new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
+    private List<Equipment> equipment = new ArrayList<>();
+    private List<Project> projects = new ArrayList<>();
 
 
     public Long getId() {
@@ -45,12 +47,12 @@ public class BuildingCompany {
 
     public List<Department> getDepartment() {
 
-        return department;
+        return departments;
     }
 
     public void setDepartment(List<Department> department) {
 
-        this.department = department;
+        this.departments = department;
     }
 
     public List<Client> getClients() {

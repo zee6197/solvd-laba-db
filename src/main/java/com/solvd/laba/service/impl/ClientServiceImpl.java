@@ -14,14 +14,13 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
     private static final Logger LOGGER = LogManager.getLogger(ClientServiceImpl.class);
 
-    // JDBC implementation:
     private final ClientRepository clientRepository;
 
 
     public ClientServiceImpl() {
 
-        // JDBC implementation
-        this.clientRepository = new ClientMyBatisDAO();
+
+        this.clientRepository = new ClientDAO();
     }
 
     @Override

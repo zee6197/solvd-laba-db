@@ -13,9 +13,6 @@ import java.util.List;
 public class EquipmentServiceImpl implements EquipmentService {
     private static final Logger LOGGER = LogManager.getLogger(EquipmentServiceImpl.class);
 
-    // MyBatis implementation
-    // private final EquipmentMyBatisDAO equipmentRepository;
-
     private final EquipmentRepository equipmentRepository;
 
     public EquipmentServiceImpl() {
@@ -23,8 +20,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         //  JDBC implementation
         this.equipmentRepository = new EquipmentDAO();
 
-        // MyBatis:
-        //this.equipmentRepository = new EquipmentMyBatisDAO();
     }
 
     @Override

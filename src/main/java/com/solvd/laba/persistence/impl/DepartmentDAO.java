@@ -69,14 +69,10 @@ public class DepartmentDAO implements DepartmentRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID_QUERY)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Create a map to group employees by department_id
             Map<Long, Department> departmentMap = new HashMap<>();
 
             while (resultSet.next()) {
                 Long departmentId = resultSet.getLong("d.id");
-
-                // Check if the department is already in the map
                 if (!departmentMap.containsKey(departmentId)) {
                     department = mapRow(resultSet);
                     department.setEmployees(new ArrayList<>());
@@ -84,15 +80,11 @@ public class DepartmentDAO implements DepartmentRepository {
                 } else {
                     department = departmentMap.get(departmentId);
                 }
-
-                // Check if there are related employees
                 if (resultSet.getLong("e.id") != 0) {
                     Employee employee = EmployeeDAO.mapRow(resultSet);
                     employees.add(employee);
                 }
             }
-
-            // Set the employees for the department
             department.setEmployees(employees);
         } catch (SQLException e) {
             LOGGER.error("Unable to find department by id: ", e);

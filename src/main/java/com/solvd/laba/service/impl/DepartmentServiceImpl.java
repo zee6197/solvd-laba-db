@@ -14,21 +14,17 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService {
     private static final Logger LOGGER = LogManager.getLogger(DepartmentServiceImpl.class);
 
-    // JDBC implementation:
     private final DepartmentRepository departmentRepository;
     private final EmployeeService employeeService;
 
 
 
-    // JDBC implementation:
     public DepartmentServiceImpl() {
 
         this.departmentRepository = new DepartmentDAO();
         this.employeeService = new EmployeeServiceImpl();
 
-
     }
-
 
     @Override
     public void create(Department department, Long companyID) {

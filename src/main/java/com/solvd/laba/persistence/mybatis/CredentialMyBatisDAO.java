@@ -11,11 +11,12 @@ import java.util.List;
 public class CredentialMyBatisDAO implements CredentialRepository {
 
     @Override
-    public void create(Credential credential) {
+    public long create(Credential credential) {
         try (SqlSession session = PersistenceConfig.getSessionFactory().openSession(true)) {
             CredentialRepository mapper = session.getMapper(CredentialRepository.class);
             mapper.create(credential);
         }
+        return 0;
     }
 
     @Override

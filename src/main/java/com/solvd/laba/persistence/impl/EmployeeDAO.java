@@ -17,6 +17,7 @@ public class EmployeeDAO implements EmployeeRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     private static final String INSERT_QUERY = "INSERT INTO employees (first_name, last_name, hire_date, salary, credential_id, department_id) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_CREDENTIAL_QUERY = "INSERT INTO credentials (login, password) VALUES (?, ?)";
     private static final String SELECT_BY_ID_QUERY =
 
             "SELECT e.*, c.id AS credential_id, c.login, c.password " +
@@ -34,35 +35,79 @@ public class EmployeeDAO implements EmployeeRepository {
     @Override
     public void create(Employee employee, Long departmentID) {
         Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, employee.getFirstName());
-            preparedStatement.setString(2, employee.getLastName());
-            preparedStatement.setDate(3, new java.sql.Date(employee.getHireDate().getTime()));
-            preparedStatement.setDouble(4, employee.getSalary());
-            preparedStatement.setLong(5, employee.getCredentials().getId());
-            preparedStatement.setLong(6, departmentID);
+        // Start a transaction
+        try {
+            connection.setAutoCommit(false);
+            long credentialId = insertCredential(employee.getCredentials(), connection);
+            try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setString(1, employee.getFirstName());
+                preparedStatement.setString(2, employee.getLastName());
+                preparedStatement.setDate(3, new java.sql.Date(employee.getHireDate().getTime()));
+                preparedStatement.setDouble(4, employee.getSalary());
+                preparedStatement.setLong(5, credentialId);
+                preparedStatement.setLong(6, departmentID);
 
-            int affectedRows = preparedStatement.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Creating employee failed, no rows affected.");
-            }
-
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    employee.setId(generatedKeys.getLong(1));
-                } else {
-                    throw new SQLException("Creating employee failed, no ID obtained.");
+                int affectedRows = preparedStatement.executeUpdate();
+                if (affectedRows == 0) {
+                    throw new SQLException("Creating employee failed, no rows affected.");
                 }
+
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        employee.setId(generatedKeys.getLong(1));
+                    } else {
+                        throw new SQLException("Creating employee failed, no ID obtained.");
+                    }
+                }
+                connection.commit();
+                LOGGER.info("Employee created: {}", employee);
             }
-            LOGGER.info("Employee created: {}", employee);
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException rollbackEx) {
+                LOGGER.error("Rollback failed: ", rollbackEx);
+            }
             LOGGER.error("Unable to create employee: ", e);
             throw new RuntimeException("Unable to create Employee", e);
         } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                LOGGER.error("Failed to reset auto-commit to true: ", e);
+            }
             CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
+    private long insertCredential(Credential credential, Connection connection) throws SQLException {
+        // Check if credential already exists
+        String checkQuery = "SELECT id FROM credentials WHERE login = ?";
+        try (PreparedStatement checkStmt = connection.prepareStatement(checkQuery)) {
+            checkStmt.setString(1, credential.getLogin());
+            ResultSet rs = checkStmt.executeQuery();
+            if (rs.next()) {
+                return rs.getLong("id");
+            }
+        }
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CREDENTIAL_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, credential.getLogin());
+            preparedStatement.setString(2, credential.getPassword());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating credential failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                } else {
+                    throw new SQLException("Creating credential failed, no ID obtained.");
+                }
+            }
+        }
+    }
 
     @Override
     public Employee findById(Long id) {
@@ -153,13 +198,8 @@ public class EmployeeDAO implements EmployeeRepository {
         employee.setLastName(resultSet.getString("last_name"));
         employee.setHireDate(resultSet.getDate("hire_date"));
         employee.setSalary(resultSet.getDouble("salary"));
-
         // Create and set the credentials object
         employee.setCredentials(CredentialDAO.mapRow(resultSet));
-
-
-
         return employee;
     }
-
 }

@@ -1,12 +1,13 @@
 package com.solvd.laba.domain;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Department {
     private Long id;
     private String name;
-    private List<Employee> employees;
+    private List<Employee> employees = new ArrayList<>();
 
 
     public Long getId() {
