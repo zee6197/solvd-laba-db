@@ -14,7 +14,6 @@ public class Main {
         EquipmentServiceImpl equipmentService = new EquipmentServiceImpl();
         DepartmentServiceImpl departmentService = new DepartmentServiceImpl();
         EmployeeServiceImpl employeeService = new EmployeeServiceImpl();
-        ClientServiceImpl clientService = new ClientServiceImpl();
         CredentialServiceImpl credentialService = new CredentialServiceImpl();
 
         // Creating BuildingCompany
@@ -63,22 +62,5 @@ public class Main {
 
         // Creating the BuildingCompany
         buildingCompanyService.create(newBuildingCompany);
-
-
-//        // Update Department
-//        newDepartment.setName("Mechanical Engineering");
-//        departmentService.update(newDepartment);
-//
-//        // Update Equipment
-//        newEquipment.setName("Big Crane");
-//        equipmentService.update(newEquipment);
-//
-//        // Update Employee
-//        if (newEmployee != null) {
-//            newEmployee.setSalary(4000.00);
-//            employeeService.update(newEmployee);
-//        } else {
-//            System.out.println("Employee not created, so cannot update.");
-//        }
     }
 }
