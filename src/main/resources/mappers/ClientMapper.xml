@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.laba.persistence.ClientRepository">
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO clients (name, contact_info, industry, building_company_id)
-        VALUES (#{name}, #{contactInfo}, #{industry}, #{buildingCompanyId})
+        VALUES (#{client.name}, #{client.contactInfo}, #{client.industry}, #{companyID})
     </insert>
 
     <select id="findById" resultType="com.solvd.laba.domain.Client">

@@ -13,7 +13,7 @@ public class PersistenceConfig {
     private static final SqlSessionFactory sessionFactory;
 
     static {
-        try (InputStream is = Resources.getResourceAsStream("mybatis/mybatis-config.xml")) {
+        try (InputStream is = Resources.getResourceAsStream("mybatis-config.xml")) {
             sessionFactory = new SqlSessionFactoryBuilder()
                     .build(is);
         } catch (IOException e) {
