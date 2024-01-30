@@ -3,6 +3,7 @@ package com.solvd.laba.service.impl;
 import com.solvd.laba.domain.Employee;
 import com.solvd.laba.persistence.EmployeeRepository;
 import com.solvd.laba.persistence.impl.EmployeeDAO;
+import com.solvd.laba.persistence.mybatis.EmployeeMyBatisDAO;
 import com.solvd.laba.service.EmployeeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +16,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public EmployeeServiceImpl() {
 
-        this.employeeRepository = new EmployeeDAO();
+        this.employeeRepository = new EmployeeMyBatisDAO();
     }
 
     @Override

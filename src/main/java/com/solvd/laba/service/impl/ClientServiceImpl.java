@@ -20,7 +20,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientServiceImpl() {
 
 
-        this.clientRepository = new ClientDAO();
+        this.clientRepository = new ClientMyBatisDAO();
     }
 
     @Override

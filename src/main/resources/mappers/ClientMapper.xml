@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.solvd.laba.persistence.ClientRepository">
 
-    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+    <insert id="create" useGeneratedKeys="true" keyProperty="client.id">
         INSERT INTO clients (name, contact_info, industry, building_company_id)
         VALUES (#{client.name}, #{client.contactInfo}, #{client.industry}, #{companyID})
     </insert>
@@ -12,18 +14,13 @@
         FROM clients
         WHERE id = #{id}
     </select>
-
     <select id="findAll" resultType="com.solvd.laba.domain.Client">
         SELECT id, name, contact_info, industry, building_company_id
         FROM clients
     </select>
 
     <update id="update" parameterType="com.solvd.laba.domain.Client">
-        UPDATE clients
-        SET name = #{name},
-        contact_info = #{contactInfo},
-        industry = #{industry},
-        building_company_id = #{buildingCompanyId}
+        UPDATE clients SET name = #{name}, contact_info = #{contactInfo}, industry = #{industry}, building_company_id = #{buildingCompanyId}
         WHERE id = #{id}
     </update>
 

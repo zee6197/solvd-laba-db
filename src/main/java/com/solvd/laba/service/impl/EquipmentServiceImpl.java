@@ -18,7 +18,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     public EquipmentServiceImpl() {
 
         //  JDBC implementation
-        this.equipmentRepository = new EquipmentDAO();
+        this.equipmentRepository = new EquipmentMyBatisDAO();
 
     }
 

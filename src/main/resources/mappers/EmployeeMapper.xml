@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.solvd.laba.persistence.IEmployeeDAO">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    <insert id="create" parameterType="com.solvd.laba.domain.Employee" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO employees (first_name, last_name, hire_date, salary, credential_id)
-        VALUES (#{firstName}, #{lastName}, #{hireDate}, #{salary}, #{credentials.id})
+<mapper namespace="com.solvd.laba.persistence.EmployeeRepository">
+
+    <insert id="create" parameterType="map" useGeneratedKeys="true" keyProperty="employee.id">
+        INSERT INTO employees (first_name, last_name, hire_date, salary, credential_id, department_id)
+        VALUES (#{employee.firstName}, #{employee.lastName}, #{employee.hireDate}, #{employee.salary}, #{employee.credentials.id}, #{departmentID})
     </insert>
 
     <select id="findById" resultMap="EmployeeResult">

@@ -21,7 +21,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     public DepartmentServiceImpl() {
 
-        this.departmentRepository = new DepartmentDAO();
+        this.departmentRepository = new DepartmentMyBatisDAO();
         this.employeeService = new EmployeeServiceImpl();
 
     }
