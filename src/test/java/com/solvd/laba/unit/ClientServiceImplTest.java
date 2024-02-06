@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -16,15 +16,14 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 public class ClientServiceImplTest {
-
     @Mock
-    private ClientRepository clientRepository;
+    private ClientRepository mockClientRepository;
     @InjectMocks
     private ClientServiceImpl clientService;
-
-    @BeforeClass
+    @BeforeMethod
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        clientService = new ClientServiceImpl(mockClientRepository);
     }
 
     @Test
@@ -35,51 +34,47 @@ public class ClientServiceImplTest {
         client.setContactInfo("testContactInfo");
         client.setIndustry("testIndustry");
         Long companyID = 1L;
-        doNothing().when(clientRepository).create(client, companyID);
+        doNothing().when(mockClientRepository).create(client, companyID);
         clientService.create(client, companyID);
-        verify(clientRepository, times(1)).create(client, companyID);
+        verify(mockClientRepository, times(1)).create(client, companyID);
     }
 
     @Test
     public void testRetrieveById() {
-
         Long clientId = 1L;
-        // Precondition
         Client expectedClient = new Client();
         expectedClient.setName("testName");
         expectedClient.setContactInfo("testContactInfo");
         expectedClient.setIndustry("testIndustry");
-        // Test
-        when(clientRepository.findById(clientId)).thenReturn(expectedClient);
+        when(mockClientRepository.findById(clientId)).thenReturn(expectedClient);
         Client actualClient = clientService.retrieveById(clientId);
         Assert.assertEquals(actualClient, expectedClient);
-        verify(clientRepository, times(1)).findById(clientId);
+        verify(mockClientRepository, times(1)).findById(clientId);
     }
 
     @Test
     public void testRetrieveAll() {
-
         List<Client> expectedClients = Arrays.asList(new Client(), new Client());
-        when(clientRepository.findAll()).thenReturn(expectedClients);
+        when(mockClientRepository.findAll()).thenReturn(expectedClients);
         List<Client> actualClients = clientService.retrieveAll();
         Assert.assertEquals(actualClients, expectedClients);
-        verify(clientRepository, times(1)).findAll();
+        verify(mockClientRepository, times(1)).findAll();
     }
 
     @Test
     public void testUpdateClient() {
         Client client = new Client();
-        doNothing().when(clientRepository).update(client);
+        doNothing().when(mockClientRepository).update(client);
         clientService.update(client);
-        verify(clientRepository, times(1)).update(client);
+        verify(mockClientRepository, times(1)).update(client);
     }
 
     @Test
     public void testDeleteClient() {
 
         Long clientId = 1L;
-        doNothing().when(clientRepository).delete(clientId);
+        doNothing().when(mockClientRepository).delete(clientId);
         clientService.delete(clientId);
-        verify(clientRepository, times(1)).delete(clientId);
+        verify(mockClientRepository, times(1)).delete(clientId);
     }
 }

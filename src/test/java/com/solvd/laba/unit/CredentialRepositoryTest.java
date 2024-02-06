@@ -27,8 +27,8 @@ public class CredentialRepositoryTest {
     public void testCreateCredential() {
 
         Credential credential = new Credential();
-        credential.setLogin("testUser");
-        credential.setPassword("testPass");
+        credential.setLogin("John");
+        credential.setPassword("Smith");
         long credentialId = credentialRepository.create(credential);
         assertTrue(credentialId > 0, "Credential ID should be greater than zero.");
     }
@@ -71,8 +71,8 @@ public class CredentialRepositoryTest {
     public void testDeleteCredential() {
         // Precondition
         Credential credential = new Credential();
-        credential.setLogin("Zee");
-        credential.setPassword("Bob");
+        credential.setLogin("John");
+        credential.setPassword("Smith");
         long credentialId = credentialRepository.create(credential);
 
         // Test
