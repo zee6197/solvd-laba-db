@@ -16,11 +16,15 @@ public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
 
+    public ClientServiceImpl(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
 
     public ClientServiceImpl() {
 
 
-        this.clientRepository = new ClientMyBatisDAO();
+        this.clientRepository = new ClientDAO();
     }
 
     @Override

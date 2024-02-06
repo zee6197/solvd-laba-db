@@ -24,8 +24,6 @@ public class ClientServiceImplTest {
     @BeforeClass
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-
-        clientService = new ClientServiceImpl();
     }
 
     @Test
