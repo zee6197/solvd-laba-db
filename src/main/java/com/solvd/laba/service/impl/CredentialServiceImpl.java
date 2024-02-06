@@ -17,7 +17,7 @@ public class CredentialServiceImpl implements CredentialService {
 
     public CredentialServiceImpl() {
 
-        this.credentialRepository = new CredentialMyBatisDAO();
+        this.credentialRepository = new CredentialDAO();
 
     }
 

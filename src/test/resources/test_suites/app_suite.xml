@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="App Suite" verbose="10" parallel="methods" thread-count="10">
+
+    <test name="App test">
+
+        <classes>
+            <class name="com.solvd.laba.unit.CredentialRepositoryTest"/>
+            <class name="com.solvd.laba.unit.ClientServiceImplTest"/>
+        </classes>
+
+    </test>
+
+</suite>
