@@ -3,6 +3,7 @@ package com.solvd.laba.unit;
 import com.solvd.laba.domain.Client;
 import com.solvd.laba.persistence.ClientRepository;
 import com.solvd.laba.service.impl.ClientServiceImpl;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
@@ -18,7 +19,7 @@ public class ClientServiceImplTest {
 
     @Mock
     private ClientRepository clientRepository;
-
+    @InjectMocks
     private ClientServiceImpl clientService;
 
     @BeforeClass
