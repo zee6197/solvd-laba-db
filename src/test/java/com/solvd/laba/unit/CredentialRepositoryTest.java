@@ -27,8 +27,8 @@ public class CredentialRepositoryTest {
     public void testCreateCredential() {
 
         Credential credential = new Credential();
-        credential.setLogin("John");
-        credential.setPassword("Smith");
+        credential.setLogin("testUser");
+        credential.setPassword("testPassword");
         long credentialId = credentialRepository.create(credential);
         assertTrue(credentialId > 0, "Credential ID should be greater than zero.");
     }
