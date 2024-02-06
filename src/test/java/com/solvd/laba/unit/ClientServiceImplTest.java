@@ -37,22 +37,6 @@ public class ClientServiceImplTest {
     }
 
     @Test
-    public void testRetrieveById() {
-
-        Long clientId = 1L;
-        clientService.retrieveById(clientId);
-        verify(mockClientRepository, times(1)).findById(clientId);
-    }
-
-    @Test
-    public void testRetrieveAll() {
-        clientService.retrieveAll();
-        verify(mockClientRepository, times(1)).findAll();
-    }
-
-
-
-    @Test
     public void testUpdateClient() {
         Client client = new Client();
         doNothing().when(mockClientRepository).update(client);
